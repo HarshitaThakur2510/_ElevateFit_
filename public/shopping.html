@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ElevateFit - Premium Gym Supplements & Gear</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="images/icon.png" type="image/png"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #111827; color: #f9fafb; }
+    .hero-section { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1581009137042-c552e485697a?q=80&w=2670&auto=format&fit=crop'); background-size:cover; background-position:center; }
+    .section-title { font-weight:800; text-transform:uppercase; letter-spacing:1.5px; }
+    .product-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(255,165,0,0.2); }
+    .btn-primary { background-color: #f97316; color: white; transition: background-color 0.3s ease; }
+    .btn-primary:hover { background-color: #ea580c; }
+    .btn-secondary { background-color: #374151; color: white; transition: background-color 0.3s ease; }
+    .btn-secondary:hover { background-color: #4b5563; }
+    .category-card { transition: transform 0.3s ease, background-color 0.3s ease; }
+    .category-card:hover { transform: scale(1.05); background-color: #1f2937; }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Header -->
+  <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-white">
+        <i class="fas fa-dumbbell text-orange-500"></i> ElevateFit
+      </a>
+
+      <div class="hidden md:flex space-x-8 items-center">
+        <a href="#supplements" class="text-gray-300 hover:text-orange-500 transition">Supplements</a>
+        <a href="#apparel" class="text-gray-300 hover:text-orange-500 transition">Apparel</a>
+        <a href="#footwear" class="text-gray-300 hover:text-orange-500 transition">Footwear</a>
+        <a href="#equipment" class="text-gray-300 hover:text-orange-500 transition">Equipment</a>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <!-- Cart button (now functional) -->
+        <button id="cart-button" class="relative text-gray-300 hover:text-orange-500 transition" title="Cart">
+          <i class="fas fa-shopping-cart fa-lg"></i>
+          <span id="cart-count" class="absolute -top-2 -right-3 bg-orange-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">0</span>
+        </button>
+
+        <button class="md:hidden text-white">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section h-[70vh] flex items-center justify-center text-center">
+      <div class="container mx-auto px-6">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">Unleash Your Potential</h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8">Premium supplements and elite gear designed to fuel your fitness journey. Elevate your performance, starting today.</p>
+        <a href="#supplements" class="btn-primary font-bold py-3 px-8 rounded-lg text-lg uppercase">Shop Now</a>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-16 bg-gray-800">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div class="category-card bg-gray-900 p-6 rounded-lg">
+            <i class="fas fa-pills text-orange-500 text-4xl mb-4"></i>
+            <h3 class="text-xl font-semibold">Supplements</h3>
+          </div>
+          <div class="category-card bg-gray-900 p-6 rounded-lg">
+            <i class="fas fa-tshirt text-orange-500 text-4xl mb-4"></i>
+            <h3 class="text-xl font-semibold">Apparel</h3>
+          </div>
+          <div class="category-card bg-gray-900 p-6 rounded-lg">
+            <i class="fas fa-shoe-prints text-orange-500 text-4xl mb-4"></i>
+            <h3 class="text-xl font-semibold">Footwear</h3>
+          </div>
+          <div class="category-card bg-gray-900 p-6 rounded-lg">
+            <i class="fas fa-weight-hanging text-orange-500 text-4xl mb-4"></i>
+            <h3 class="text-xl font-semibold">Equipment</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Supplements (each product-card has add-to-cart btn) -->
+    <section id="supplements" class="py-20">
+      <div class="container mx-auto px-6">
+        <h2 class="section-title text-3xl text-center mb-12">Featured Supplements</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+          <!-- Product Card 1 -->
+          <div class="product-card bg-gray-800 rounded-lg overflow-hidden flex flex-col" data-product-name="Biozyme Performance Whey 4.4 lb Rich Chocolate" data-product-price="5499">
+            <img src="shopping_images/MuscleBlaze Biozyme Performance Whey.png" alt="Biozyme Performance Whey" class="w-full h-56 object-cover">
+            <div class="p-5 flex flex-col flex-grow">
+              <h3 class="text-lg font-semibold mb-2 flex-grow">Biozyme Performance Whey 4.4 lb Rich Chocolate</h3>
+              <div class="flex justify-between items-center mb-4">
+                <p class="text-xl font-bold text-orange-500">₹5,499</p>
+                <span class="text-sm text-green-400">12% OFF</span>
+              </div>
+              <div class="space-y-2">
+                <button class="add-to-cart btn-secondary w-full py-2 rounded-md font-semibold">Add to Cart</button>
+                <button class="buy-now btn-primary w-full py-2 rounded-md font-bold">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 2 -->
+          <div class="product-card bg-gray-800 rounded-lg overflow-hidden flex flex-col" data-product-name="Biozyme Whey PR 4.4 lb Chocolate Fudge" data-product-price="6299">
+            <img src="shopping_images/Biozyme Whey PR 4.4 lb Chocolate Fudge.png" alt="Biozyme Whey PR" class="w-full h-56 object-cover">
+            <div class="p-5 flex flex-col flex-grow">
+              <h3 class="text-lg font-semibold mb-2 flex-grow">Biozyme Whey PR 4.4 lb Chocolate Fudge</h3>
+              <div class="flex justify-between items-center mb-4">
+                <p class="text-xl font-bold text-orange-500">₹6,299</p>
+                <span class="text-sm text-green-400">10% OFF</span>
+              </div>
+              <div class="space-y-2">
+                <button class="add-to-cart btn-secondary w-full py-2 rounded-md font-semibold">Add to Cart</button>
+                <button class="buy-now btn-primary w-full py-2 rounded-md font-bold">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 3 -->
+          <div class="product-card bg-gray-800 rounded-lg overflow-hidden flex flex-col" data-product-name="Biozyme Iso-Zero 4.4 lb Low Carb Ice Cream Chocolate" data-product-price="8199">
+            <img src="shopping_images/Biozyme Iso-Zero 4.4 lb Low Carb Ice Cream Chocolate.png" alt="Biozyme Iso-Zero" class="w-full h-56 object-cover">
+            <div class="p-5 flex flex-col flex-grow">
+              <h3 class="text-lg font-semibold mb-2 flex-grow">Biozyme Iso-Zero 4.4 lb Low Carb Ice Cream Chocolate</h3>
+              <div class="flex justify-between items-center mb-4">
+                <p class="text-xl font-bold text-orange-500">₹8,199</p>
+                <span class="text-sm text-green-400">13% OFF</span>
+              </div>
+              <div class="space-y-2">
+                <button class="add-to-cart btn-secondary w-full py-2 rounded-md font-semibold">Add to Cart</button>
+                <button class="buy-now btn-primary w-full py-2 rounded-md font-bold">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 4 -->
+          <div class="product-card bg-gray-800 rounded-lg overflow-hidden flex flex-col" data-product-name="Biozyme Gold 100% Whey 4.4 lb Double Rich Chocolate" data-product-price="6899">
+            <img src="shopping_images/Biozyme Performance why 4.4lb rich chocolate.png" alt="Biozyme Gold 100% Whey" class="w-full h-56 object-cover">
+            <div class="p-5 flex flex-col flex-grow">
+              <h3 class="text-lg font-semibold mb-2 flex-grow">Biozyme Gold 100% Whey 4.4 lb Double Rich Chocolate</h3>
+              <div class="flex justify-between items-center mb-4">
+                <p class="text-xl font-bold text-orange-500">₹6,899</p>
+                <span class="text-sm text-green-400">14% OFF</span>
+              </div>
+              <div class="space-y-2">
+                <button class="add-to-cart btn-secondary w-full py-2 rounded-md font-semibold">Add to Cart</button>
+                <button class="buy-now btn-primary w-full py-2 rounded-md font-bold">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 5 -->
+          <div class="product-card bg-gray-800 rounded-lg overflow-hidden flex flex-col" data-product-name="Biozyme Performance Whey 8.8 lb Chocolate Hazelnut" data-product-price="10799">
+            <img src="shopping_images/Biozyme Iso-Zero 4.4 lb Low Carb Ice Cream Chocolate.png" alt="Biozyme Performance Whey Hazelnut" class="w-full h-56 object-cover">
+            <div class="p-5 flex flex-col flex-grow">
+              <h3 class="text-lg font-semibold mb-2 flex-grow">Biozyme Performance Whey 8.8 lb Chocolate Hazelnut</h3>
+              <div class="flex justify-between items-center mb-4">
+                <p class="text-xl font-bold text-orange-500">₹10,799</p>
+                <span class="text-sm text-green-400">10% OFF</span>
+              </div>
+              <div class="space-y-2">
+                <button class="add-to-cart btn-secondary w-full py-2 rounded-md font-semibold">Add to Cart</button>
+                <button class="buy-now btn-primary w-full py-2 rounded-md font-bold">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Apparel, Footwear, Equipment (unchanged content omitted for brevity) -->
+    <!-- ... copy your existing sections for apparel, footwear, equipment here ... -->
+
+  </main>
+
+  <!-- Cart Modal (hidden by default) -->
+  <div id="cart-modal" class="fixed inset-0 z-60 hidden items-center justify-center bg-black/50 p-4">
+    <div class="bg-gray-900 w-full max-w-2xl rounded-lg overflow-hidden shadow-2xl">
+      <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+        <h3 class="text-xl font-semibold">Your Cart</h3>
+        <div class="flex items-center gap-3">
+          <div class="text-sm text-gray-400" id="cart-items-count">0 items</div>
+          <button id="close-cart" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+
+      <div class="p-4 max-h-[60vh] overflow-y-auto" id="cart-items-list">
+        <!-- dynamically inserted -->
+      </div>
+
+      <div class="p-4 border-t border-gray-700">
+        <div class="flex justify-between items-center mb-4">
+          <div class="text-sm text-gray-400">Subtotal</div>
+          <div class="text-xl font-bold text-orange-500" id="cart-subtotal">₹0</div>
+        </div>
+
+        <div class="flex gap-3">
+          <button id="clear-cart" class="btn-secondary w-full py-2 rounded-md font-semibold">Clear Cart</button>
+          <button id="checkout" class="btn-primary w-full py-2 rounded-md font-bold">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 border-t border-gray-700">
+    <div class="container mx-auto px-6 py-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <a href="#" class="text-2xl font-bold text-white">
+            <i class="fas fa-dumbbell text-orange-500"></i> ElevateFit
+          </a>
+          <p class="text-sm text-gray-400 mt-2">Elevating your fitness journey.</p>
+        </div>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-orange-500 transition"><i class="fab fa-facebook-f fa-lg"></i></a>
+          <a href="#" class="text-gray-400 hover:text-orange-500 transition"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="#" class="text-gray-400 hover:text-orange-500 transition"><i class="fab fa-twitter fa-lg"></i></a>
+          <a href="#" class="text-gray-400 hover:text-orange-500 transition"><i class="fab fa-youtube fa-lg"></i></a>
+        </div>
+      </div>
+      <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+        &copy; 2025 ElevateFit. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- --- Script: cart logic --- -->
+  <script>
+    // Storage key
+    const CART_KEY = 'elevatefit_cart_v1';
+
+    // Utility: load cart (array of {id,name,price,qty})
+    function loadCart() {
+      const raw = localStorage.getItem(CART_KEY);
+      try {
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        console.error('Cart read error', e);
+        return [];
+      }
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      updateCartBadge();
+    }
+
+    function updateCartBadge() {
+      const cart = loadCart();
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('cart-count').textContent = count;
+    }
+
+    // Add product logic (dedupe by name)
+    function addToCart(product) {
+      const cart = loadCart();
+      const idx = cart.findIndex(i => i.name === product.name);
+      if (idx > -1) {
+        cart[idx].qty += product.qty;
+      } else {
+        cart.push(product);
+      }
+      saveCart(cart);
+      showToast(`${product.name} added to cart (x${product.qty})`);
+    }
+
+    // Small toast
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.className = 'fixed bottom-6 right-6 bg-gray-800 text-white px-4 py-2 rounded shadow';
+      document.body.appendChild(t);
+      setTimeout(()=> t.remove(), 2500);
+    }
+
+    // Render cart modal
+    function renderCartModal() {
+      const list = document.getElementById('cart-items-list');
+      const cart = loadCart();
+      list.innerHTML = '';
+      if (cart.length === 0) {
+        list.innerHTML = '<div class="text-gray-400 text-center py-8">Your cart is empty.</div>';
+      } else {
+        cart.forEach((item, i) => {
+          const el = document.createElement('div');
+          el.className = 'flex items-center gap-4 py-3 border-b border-gray-700';
+          el.innerHTML = `
+            <div class="flex-1">
+              <div class="font-semibold">${escapeHtml(item.name)}</div>
+              <div class="text-sm text-gray-400">₹${formatNumber(item.price)}</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="decrease text-gray-300 px-2 py-1 rounded bg-gray-800">-</button>
+              <div class="px-3 font-medium">${item.qty}</div>
+              <button class="increase text-gray-300 px-2 py-1 rounded bg-gray-800">+</button>
+              <button class="remove text-red-500 ml-3" title="Remove"><i class="fas fa-trash"></i></button>
+            </div>
+          `;
+          // attach handlers after insertion
+          list.appendChild(el);
+
+          el.querySelector('.decrease').addEventListener('click', ()=> {
+            if (item.qty > 1) {
+              item.qty--;
+            } else {
+              // remove
+              cart.splice(i,1);
+            }
+            saveCart(cart);
+            renderCartModal();
+          });
+
+          el.querySelector('.increase').addEventListener('click', ()=> {
+            item.qty++;
+            saveCart(cart);
+            renderCartModal();
+          });
+
+          el.querySelector('.remove').addEventListener('click', ()=> {
+            cart.splice(i,1);
+            saveCart(cart);
+            renderCartModal();
+          });
+        });
+      }
+
+      // totals
+      const subtotalEl = document.getElementById('cart-subtotal');
+      const countEl = document.getElementById('cart-items-count');
+      const subtotal = cart.reduce((s,i) => s + (i.price * i.qty), 0);
+      const totalQty = cart.reduce((s,i) => s + i.qty, 0);
+      subtotalEl.textContent = `₹${formatNumber(subtotal)}`;
+      countEl.textContent = `${totalQty} item${totalQty !== 1 ? 's' : ''}`;
+    }
+
+    // Helpers
+    function formatNumber(n) {
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; });
+    }
+
+    // Wire add to cart and buy now
+    document.addEventListener('DOMContentLoaded', ()=> {
+      updateCartBadge();
+
+      // Add-to-cart buttons
+      document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const card = e.target.closest('.product-card');
+          const name = card.dataset.productName || card.querySelector('h3')?.textContent;
+          // price stored as number in data-product-price (INR, integer rupees)
+          const priceRaw = card.dataset.productPrice || parseInt(card.querySelector('.text-orange-500')?.textContent?.replace(/[^0-9]/g,'') || 0);
+          const price = Number(priceRaw);
+          addToCart({ id: Date.now() + Math.random(), name: name.trim(), price: price, qty: 1 });
+        });
+      });
+
+      // Buy now: add to cart then go to checkout
+      document.querySelectorAll('.buy-now').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const card = e.target.closest('.product-card');
+          const name = card.dataset.productName || card.querySelector('h3')?.textContent;
+          const priceRaw = card.dataset.productPrice || parseInt(card.querySelector('.text-orange-500')?.textContent?.replace(/[^0-9]/g,'') || 0);
+          const price = Number(priceRaw);
+          // add single unit then go to checkout
+          addToCart({ id: Date.now() + Math.random(), name: name.trim(), price: price, qty: 1 });
+          // open cart modal then redirect on checkout
+          openCartModal();
+        });
+      });
+
+      // Cart button open
+      document.getElementById('cart-button').addEventListener('click', openCartModal);
+
+      // Close cart
+      document.getElementById('close-cart').addEventListener('click', closeCartModal);
+
+      // Clear cart
+      document.getElementById('clear-cart').addEventListener('click', ()=> {
+        localStorage.removeItem(CART_KEY);
+        updateCartBadge();
+        renderCartModal();
+        showToast('Cart cleared');
+      });
+
+      // Checkout (redirect to payment page)
+      document.getElementById('checkout').addEventListener('click', ()=> {
+        const cart = loadCart();
+        if (cart.length === 0) {
+          showToast('Your cart is empty');
+          return;
+        }
+        // Store a snapshot for payment page (already in localStorage)
+        // Redirect to payment page
+        window.location.href = 'payment.html';
+      });
+    });
+
+    // Cart modal control
+    function openCartModal() {
+      const modal = document.getElementById('cart-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      renderCartModal();
+    }
+    function closeCartModal() {
+      const modal = document.getElementById('cart-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>

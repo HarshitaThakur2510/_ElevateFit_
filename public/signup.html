@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sign Up - ElevateFit</title>
+
+  <style>
+    :root {
+      --orange: #f97316;
+      --orange-dark: #ea580c;
+      --text: #ffffff;
+      --card-bg: rgba(31, 41, 55, 0.75);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1400&q=60') center/cover;
+      min-height: 100vh; color: var(--text);
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+    body::before {
+      content: ""; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 0;
+    }
+    main { position: relative; z-index: 1; display: flex; justify-content: center; padding: 2rem; }
+
+    .signup-card {
+      background: var(--card-bg); border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 2.5rem; max-width: 420px; width: 100%;
+      text-align: center; box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      animation: fadeIn 0.8s ease;
+      transition: box-shadow 0.3s ease;
+    }
+    .signup-card:hover { box-shadow: 0 0 25px rgba(249,115,22,0.4); }
+
+    @keyframes fadeIn { from {opacity:0;transform:translateY(30px);} to {opacity:1;transform:translateY(0);} }
+
+    h1 { font-size:1.8rem; margin-bottom:1.5rem; color:var(--orange); }
+
+    .input-group { position:relative; margin-bottom:1.4rem; }
+    .input-group input {
+      width:100%; padding:1rem; border-radius:10px;
+      border:1px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.08);
+      color:#fff; outline:none; transition:all 0.3s ease;
+    }
+    .input-group input:focus {
+      border-color:var(--orange);
+      box-shadow:0 0 10px rgba(249,115,22,0.3);
+      background:rgba(255,255,255,0.12);
+    }
+    .input-group label {
+      position:absolute; left:15px; top:50%; transform:translateY(-50%);
+      color:#aaa; pointer-events:none; transition:all 0.2s ease;
+    }
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top:8px; font-size:0.75rem; color:var(--orange);
+    }
+
+    .cta-button {
+      width:100%; padding:0.8rem; border:none; border-radius:10px;
+      background:linear-gradient(90deg,var(--orange),var(--orange-dark));
+      color:#fff; font-weight:700; cursor:pointer;
+      transition:all 0.3s ease; box-shadow:0 0 10px rgba(249,115,22,0.4);
+    }
+    .cta-button:hover { transform:translateY(-2px); box-shadow:0 0 18px rgba(249,115,22,0.6); }
+
+    .login-prompt { margin-top:1rem; color:#d1d5db; font-size:0.9rem; }
+    .login-prompt a { color:var(--orange); font-weight:600; text-decoration:none; }
+    .login-prompt a:hover { text-decoration:underline; }
+    small { display:block; margin-top:0.8rem; color:#ff6b6b; min-height:20px; }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section class="signup-card">
+      <h1>Create Your ElevateFit Account</h1>
+
+      <form id="signup-user-form" novalidate>
+        <div class="input-group">
+          <input id="su-name" type="text" required placeholder=" " />
+          <label for="su-name">Full Name</label>
+        </div>
+        <div class="input-group">
+          <input id="su-email" type="email" required placeholder=" " />
+          <label for="su-email">Email</label>
+        </div>
+        <div class="input-group">
+          <input id="su-password" type="password" minlength="6" required placeholder=" " />
+          <label for="su-password">Password</label>
+        </div>
+        <div class="input-group">
+          <input id="su-confirm" type="password" minlength="6" required placeholder=" " />
+          <label for="su-confirm">Confirm Password</label>
+        </div>
+
+        <button type="submit" class="cta-button">Create Account</button>
+        <small id="su-error" aria-live="polite"></small>
+      </form>
+
+      <p class="login-prompt">
+        Already have an account? <a href="login.html">Log in</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="js/auth.js" defer></script>
+</body>
+</html>

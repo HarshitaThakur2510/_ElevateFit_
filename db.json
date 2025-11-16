@@ -1,0 +1,63 @@
+{
+  "users": [
+    {
+      "id": "2230",
+      "name": "AK",
+      "email": "ak@gmail.com",
+      "password": "123456",
+      "role": "user",
+      "createdAt": "2025-11-10T08:39:59.062Z"
+    }
+  ],
+  "admins": [
+    {
+      "id": "9155",
+      "name": "ak",
+      "email": "ak@gmail.com",
+      "password": "123456",
+      "role": "admin",
+      "createdAt": "2025-10-26T19:38:28.497Z"
+    },
+    {
+      "id": "7875",
+      "name": "harshita",
+      "email": "harshita@gmail.com",
+      "password": "123456",
+      "role": "admin",
+      "createdAt": "2025-11-10T04:13:24.334Z"
+    }
+  ],
+  "contacts": [],
+  "profiles": [
+    {
+      "id": "9afa",
+      "userId": "2230",
+      "name": "AK",
+      "email": "ak@gmail.com",
+      "age": "22",
+      "gender": "male",
+      "height": "186",
+      "weight": "82",
+      "bmi": "23.7",
+      "bmiCategory": "Normal Weight",
+      "updatedAt": "2025-11-10T08:41:44.738Z"
+    }
+  ],
+  "memberships": [
+    {
+      "id": "9b78",
+      "userId": "2230",
+      "name": "AK",
+      "email": "ak@gmail.com",
+      "planName": "Premium",
+      "subscribedAt": "2025-11-11T04:25:17.074Z"
+    }
+  ],
+  "walletTransactions": [
+    {
+      "id": "1762835477023",
+      "date": "11/11/2025, 10:01:17 AM",
+      "amount": 999
+    }
+  ]
+}

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - ElevateFit</title>
+
+<style>
+:root {
+  --page-bg: #111827;
+  --card-bg: #1f2937;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+  --text: #fff;
+  --muted: #d1d5db;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--page-bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+header {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+header a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+header a:hover { color: var(--accent); }
+
+main {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.card h2 {
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+input, select {
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #fff;
+  color: #111827;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+input:focus, select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+#bmiDisplay {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 0.8rem;
+}
+
+#message {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+.success { color: #4ade80; }
+.error { color: #f87171; }
+</style>
+</head>
+
+<body>
+<header>
+  <h1>Profile Settings</h1>
+  <a href="customer.html">← Back to Dashboard</a>
+</header>
+
+<main>
+  <div class="card">
+    <h2>Your Personal Details</h2>
+    <form id="profileForm">
+      <label>Full Name
+        <input type="text" id="p-name" required>
+      </label>
+      <label>Email
+        <input type="email" id="p-email" required readonly>
+      </label>
+      <label>Age
+        <input type="number" id="p-age" min="10" max="100" required>
+      </label>
+      <label>Gender
+        <select id="p-gender">
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+      <label>Height (cm)
+        <input type="number" id="p-height" min="50" max="250" required>
+      </label>
+      <label>Weight (kg)
+        <input type="number" id="p-weight" min="20" max="200" required>
+      </label>
+      <div id="bmiDisplay">BMI: --</div>
+      <button type="submit">Save Profile</button>
+    </form>
+    <div id="message"></div>
+  </div>
+</main>
+
+<script>
+const API = "http://localhost:3000";
+const session = JSON.parse(localStorage.getItem("session") || "null");
+
+// Redirect if not logged in
+if (!session || session.role !== "user") {
+  window.location.href = "welcome.html";
+}
+
+const nameInput = document.getElementById("p-name");
+const emailInput = document.getElementById("p-email");
+const ageInput = document.getElementById("p-age");
+const genderInput = document.getElementById("p-gender");
+const heightInput = document.getElementById("p-height");
+const weightInput = document.getElementById("p-weight");
+const bmiDisplay = document.getElementById("bmiDisplay");
+const msg = document.getElementById("message");
+
+emailInput.value = session.email;
+nameInput.value = session.name;
+
+// Auto-calculate BMI with category
+function calcBMI() {
+  const h = parseFloat(heightInput.value);
+  const w = parseFloat(weightInput.value);
+  if (h > 0 && w > 0) {
+    const bmi = w / ((h / 100) * (h / 100));
+    let category = "";
+    if (bmi < 18.5) category = "Underweight";
+    else if (bmi < 25) category = "Normal Weight";
+    else if (bmi < 30) category = "Overweight";
+    else category = "Obese";
+    bmiDisplay.textContent = `BMI: ${bmi.toFixed(1)} — ${category}`;
+    return { bmi: bmi.toFixed(1), category };
+  }
+  bmiDisplay.textContent = "BMI: --";
+  return { bmi: null, category: "" };
+}
+
+heightInput.addEventListener("input", calcBMI);
+weightInput.addEventListener("input", calcBMI);
+
+// Load profile data
+async function loadProfile() {
+  try {
+    const res = await fetch(`${API}/profiles?userId=${session.id}`);
+    const data = await res.json();
+    if (data.length) {
+      const p = data[0];
+      ageInput.value = p.age || "";
+      genderInput.value = p.gender || "";
+      heightInput.value = p.height || "";
+      weightInput.value = p.weight || "";
+      if (p.bmi) bmiDisplay.textContent = `BMI: ${p.bmi} — ${p.bmiCategory || ""}`;
+    }
+  } catch (err) {
+    console.error("Failed to load profile", err);
+  }
+}
+
+// Save or update profile
+document.getElementById("profileForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const age = ageInput.value.trim();
+  const gender = genderInput.value.trim();
+  const height = heightInput.value.trim();
+  const weight = weightInput.value.trim();
+  const { bmi, category } = calcBMI();
+
+  if (!age || !height || !weight || !gender) {
+    msg.textContent = "Please fill all required fields.";
+    msg.className = "error";
+    return;
+  }
+
+  const profileData = {
+    userId: session.id,
+    name: session.name,
+    email: session.email,
+    age,
+    gender,
+    height,
+    weight,
+    bmi,
+    bmiCategory: category,
+    updatedAt: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch(`${API}/profiles?userId=${session.id}`);
+    const existing = await res.json();
+
+    if (existing.length) {
+      await fetch(`${API}/profiles/${existing[0].id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profileData)
+      });
+    } else {
+      await fetch(`${API}/profiles`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profileData)
+      });
+    }
+
+    msg.textContent = "✅ Profile saved successfully!";
+    msg.className = "success";
+  } catch (err) {
+    console.error("Error saving profile", err);
+    msg.textContent = "❌ Failed to save profile. Try again.";
+    msg.className = "error";
+  }
+});
+
+loadProfile();
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+@echo off
+echo  Starting ElevateFit JSON Server...
+start "ELEVATEFIT_JSON_SERVER" cmd /k "npx json-server db.json --port 3000"

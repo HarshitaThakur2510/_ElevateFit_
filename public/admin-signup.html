@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Admin Sign Up - ElevateFit</title>
+
+  <style>
+    :root {
+      --orange: #f97316;
+      --orange-dark: #ea580c;
+      --text: #ffffff;
+      --card-bg: rgba(31, 41, 55, 0.75); /* same as login.html */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background:
+        linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+        url('https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow: hidden;
+    }
+
+    /* Soft orange glow */
+    body::after {
+      content: "";
+      position: absolute;
+      bottom: -120px;
+      right: -150px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(249,115,22,0.25), transparent 70%);
+      filter: blur(100px);
+      z-index: 0;
+      animation: pulseGlow 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      from { opacity: 0.4; transform: scale(1); }
+      to { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .signup-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 2.5rem;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+      animation: fadeIn 0.8s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .signup-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px rgba(249, 115, 22, 0.5);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin-bottom: 1.8rem;
+      color: var(--orange);
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(249,115,22,0.4);
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 1.4rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 1rem 0.9rem 0.8rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      outline: none;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .input-group input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 10px rgba(249,115,22,0.3);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .input-group label {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aaa;
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: 8px;
+      font-size: 0.75rem;
+      color: var(--orange);
+    }
+
+    .cta-button {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--orange), var(--orange-dark));
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(249,115,22,0.4);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 18px rgba(249,115,22,0.6);
+    }
+
+    small {
+      display: block;
+      margin-top: 0.8rem;
+      color: #ff6b6b;
+      min-height: 20px;
+    }
+
+    .login-prompt {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+
+    .login-prompt a {
+      color: var(--orange);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .login-prompt a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 500px) {
+      .signup-card {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="signup-page">
+    <section class="signup-card">
+      <h1>Create Admin Account</h1>
+
+      <form id="signup-admin-form" class="signup-form" novalidate>
+        <div class="input-group">
+          <input id="admin-name" name="name" type="text" required placeholder=" " />
+          <label for="admin-name">Full Name</label>
+        </div>
+
+        <div class="input-group">
+          <input id="admin-email" name="email" type="email" required placeholder=" " />
+          <label for="admin-email">Email</label>
+        </div>
+
+        <div class="input-group">
+          <input id="admin-password" name="password" type="password" minlength="6" required placeholder=" " />
+          <label for="admin-password">Password</label>
+        </div>
+
+        <div class="input-group">
+          <input id="admin-confirm" name="confirm" type="password" minlength="6" required placeholder=" " />
+          <label for="admin-confirm">Confirm Password</label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="cta-button">Create Admin Account</button>
+        </div>
+        <small id="su-error" aria-live="polite"></small>
+      </form>
+
+      <p class="login-prompt">
+        Already have an admin account?
+        <a href="login.html" class="link">Log in</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="js/auth.js" defer></script>
+</body>
+</html>

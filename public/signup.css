@@ -1,0 +1,124 @@
+/* Signup page theme aligned with style.css variables and typography */
+
+:root {
+    /* reuse project's color variables if style.css is loaded first */
+    --primary: var(--primary-color, #ff6b6b);
+    --secondary: var(--secondary-color, #4ecdc4);
+    --dark: var(--dark-color, #2c3e50);
+    --light: var(--light-color, #ecf0f1);
+    --text: var(--text-color, #34495e);
+}
+
+* { box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
+
+body {
+    margin: 0;
+    background: #111827;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* container */
+.signup-page { width: 100%; max-width: 720px; }
+.signup-card {
+    background: #343a40;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(44,62,80,0.08);
+    border: 1px solid rgba(44,62,80,0.04);
+}
+
+/* header */
+.signup-card h1 {
+    text-align: center;
+    margin: 0 0 1.25rem;
+    font-size: 1.6rem;
+    color: #ffffff;
+}
+
+/* tabs */
+.tab-controls { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.tab {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    background: #ff6b6b;
+    border: 1px solid#ff6b6b;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 600;
+}
+.tab:hover { background: #e74c3c;; }
+.tab.active {
+     transition: background 0.3s ease;
+    border-color: rgba(255,107,107,0.18);
+    color: #ffffff;
+}
+
+/* forms */
+.signup-form { display: grid; gap: 0.75rem; }
+.signup-form label { display: flex; flex-direction: column; font-size: 0.95rem; color: #fff; }
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"],
+.signup-form input[type="number"] {
+    margin-top: 0.35rem;
+    padding: 0.7rem;
+    border-radius: 8px;
+    border: 1px solid rgba(44,62,80,0.08);
+    background: #fff;
+    color: var(--text);
+    outline: none;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.signup-form input:focus {
+    box-shadow: 0 0 0 6px rgba(255,107,107,0.06);
+    border-color: rgba(255,107,107,0.22);
+}
+
+/* actions */
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center; /* center the button and link */
+    margin-top: 0.6rem;
+}
+
+/* keep the Back link spaced nicely from the button */
+.form-actions .link {
+    margin-left: 0.6rem;
+}
+
+.cta-button {
+    background: var(--primary);
+    color: #fff;
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+}
+.cta-button:hover { filter: brightness(0.95); }
+
+.link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+.link:hover { color: var(--primary); }
+
+/* utility */
+.hidden { display: none; }
+
+/* small screens */
+@media (max-width: 420px) {
+    .signup-card { padding: 1rem; }
+    .form-actions { flex-direction: column; align-items: stretch; }
+    .cta-button { width: 100%; }
+}

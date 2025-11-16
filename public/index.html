@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ElevateFit</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="images/icon.png" type="image/png" />
+</head>
+
+<body>
+  <header>
+    <nav class="nav-wrapper">
+      <a href="#" class="brand">
+        <i class="fas fa-dumbbell brand-icon"></i>
+        <span class="brand-text">ElevateFit</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#plans" class="nav-link">Plans</a></li>
+        <li><a href="#blog" class="nav-link">Blog</a></li>
+        <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+        <li><a href="#bmi-calculator" class="nav-link">BMI</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="shopping.html" class="nav-icon" title="Shop"><i class="fa-solid fa-cart-shopping"></i></a></li>
+
+        <!-- SESSION SLOT (UNCHANGED) -->
+        <li id="session-info" class="session-slot"></li>
+
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero glass-hero">
+      <div class="hero-inner">
+        <h1 class="hero-title">Unleash Your Inner Strength</h1>
+        <p class="hero-sub">Transform your body and mind with personalized fitness and nutrition plans.</p>
+        <a href="#plans" class="cta-button">Start Your Journey</a>
+      </div>
+      <div class="hero-accent"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about-me glass-section">
+      <h2 class="section-title">About Us</h2>
+      <div class="about-content">
+        <img src="images/personal_trainer.avif" alt="Trainer" class="about-photo" />
+        <p class="about-text">Hi, We are Team ElevateFit! With over 10 years of experience in personal training and nutrition science, our mission is to help you build a healthier, stronger, and more confident version of yourself. We believe in sustainable lifestyle changes, not quick fixes. Let's achieve your goals together!</p>
+      </div>
+    </section>
+
+    <!-- PLANS -->
+    <section id="plans" class="plans glass-section">
+      <h2 class="section-title">Workout & Diet Plans</h2>
+      <div class="plans-grid">
+        <div class="plan-card card-animate">
+          <img src="images/lean&toned.jpg" alt="Lean & Toned">
+          <h3>Lean & Toned</h3>
+          <p>A 12-week plan focused on HIIT and strength conditioning to build lean muscle.</p>
+        </div>
+        <div class="plan-card card-animate">
+          <img src="images/bulk_up.webp" alt="Bulk Up">
+          <h3>Bulk Up</h3>
+          <p>Progressive overload program + calorie surplus guidance to gain muscle mass.</p>
+        </div>
+        <div class="plan-card card-animate">
+          <img src="images/nutrition_reset.jpg" alt="Nutrition Reset">
+          <h3>Nutrition Reset</h3>
+          <p>A 30-day meal plan to cleanse your system, boost metabolism and habits.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" class="blog glass-section">
+      <h2 class="section-title">Latest Articles</h2>
+      <div class="blog-grid">
+        <article class="blog-post card-animate">
+          <img src="images/blog_thumbnail.webp" alt="Blog">
+          <div class="post-content">
+            <h3>5 Myths About Weight Lifting</h3>
+            <p>Discover the truth behind common misconceptions and learn how strength training benefits everyone...</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-post card-animate">
+          <img src="images/blog_thumbnail2.webp" alt="Blog">
+          <div class="post-content">
+            <h3>The Importance of a Balanced Diet</h3>
+            <p>It's not just about calories. Learn how macronutrients play a vital role...</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="blog-post card-animate">
+          <img src="images/blog_thumbnail3.avif" alt="Blog">
+          <div class="post-content">
+            <h3>How to Stay Motivated</h3>
+            <p>Tips and tricks to keep your motivation high even when you don't feel like training...</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="testimonials glass-section">
+      <h2 class="section-title">Our Reviews</h2>
+      <div class="testimonial-carousel" aria-live="polite"></div>
+      <div class="carousel-controls">
+        <button id="prevBtn" class="control-btn">‹</button>
+        <button id="nextBtn" class="control-btn">›</button>
+      </div>
+    </section>
+
+    <!-- BMI -->
+    <section id="bmi-calculator" class="bmi-section glass-section">
+      <h2 class="section-title">BMI Calculator</h2>
+      <div class="bmi-panel">
+
+        <form id="bmi-form" class="bmi-form">
+          <input type="number" id="height" placeholder="Height (cm)" class="form-field" required />
+          <input type="number" id="weight" placeholder="Weight (kg)" class="form-field" required />
+          <button type="submit" class="w-full cta-button">Calculate BMI</button>
+        </form>
+
+        <div id="bmi-result" class="bmi-result"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact glass-section">
+      <h2 class="section-title">Join Now & Get in Touch</h2>
+      <div class="contact-container">
+        <form id="contact-form" class="contact-form" novalidate>
+          <input id="c-name" type="text" name="name" placeholder="Your Name" required />
+          <input id="c-email" type="email" name="email" placeholder="Your Email" required />
+          <textarea id="c-msg" name="message" placeholder="Your Message" rows="5" required></textarea>
+          <button type="submit" class="cta-button">Send Message</button>
+          <small id="c-error" aria-live="polite"></small>
+          <small id="c-success" aria-live="polite"></small>
+        </form>
+
+        <aside class="social-links">
+          <p>Follow us:</p>
+          <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- REACT MOTIVATION -->
+    <section id="react-motivation" class="react-motivation">
+      <div id="react-root" class="react-root"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 ElevateFit. All Rights Reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="js/contact.js" defer></script>
+  <script src="js/session.js" defer></script>
+
+  <!-- BMI inline logic (keeps behavior stable) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("bmi-form");
+      const result = document.getElementById("bmi-result");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const h = parseFloat(document.getElementById("height").value);
+        const w = parseFloat(document.getElementById("weight").value);
+
+        if (!h || !w || h <= 0 || w <= 0) {
+          result.textContent = "⚠️ Please enter valid height and weight.";
+          result.className = "bmi-result error";
+          return;
+        }
+
+        const bmi = w / ((h / 100) ** 2);
+        const val = bmi.toFixed(1);
+        let status = "", cls = "";
+
+        if (bmi < 18.5) { status = "Underweight"; cls = "underweight"; }
+        else if (bmi < 25) { status = "Normal weight"; cls = "normal"; }
+        else if (bmi < 30) { status = "Overweight"; cls = "overweight"; }
+        else { status = "Obese"; cls = "obese"; }
+
+        result.innerHTML = `Your BMI is <strong>${val}</strong> — <span class="${cls}">${status}</span>`;
+      });
+    });
+  </script>
+
+  <!-- React Motivation-->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function MotivationCard() {
+      const msgs = [
+        "Push yourself, no one else is going to do it for you 💪",
+        "Discipline beats motivation — show up every day 🔥",
+        "Your body can stand almost anything; it’s your mind you have to convince 🧠",
+        "Every rep brings you closer to your goal 🏋️",
+        "Progress, not perfection 🌱"
+      ];
+      const msg = msgs[Math.floor(Math.random() * msgs.length)];
+      return (
+        <div className="motivation-card">
+          <h3><i className="fas fa-fire"></i> ElevateFit Motivation</h3>
+          <p>{msg}</p>
+          <p className="small">Powered by React</p>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById("react-root")).render(<MotivationCard />);
+  </script>
+</body>
+</html>

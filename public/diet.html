@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diet Plans - ElevateFit Admin</title>
+
+<!-- JS -->
+<script src="diet.js"></script>
+
+<style>
+:root {
+  --page-bg:#111827;
+  --card-bg:#1f2937;
+  --accent:#f97316;
+  --accent-hover:#ea580c;
+  --text:#ffffff;
+  --muted:#d1d5db;
+}
+
+/* GLOBAL */
+*{box-sizing:border-box;font-family:'Poppins',sans-serif;margin:0;padding:0}
+
+body{
+  background:var(--page-bg);
+  color:var(--text);
+  min-height:100vh;
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+header{
+  width:100%;
+  max-width:900px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:2rem;
+}
+
+header h1{
+  color:var(--accent);
+  font-size:1.6rem;
+}
+
+header a{
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:600;
+}
+
+header a:hover{color:var(--accent);}
+
+/* MAIN CARD */
+.diet-form{
+  width:100%;
+  max-width:900px;
+  background:var(--card-bg);
+  padding:2rem;
+  border-radius:14px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.05);
+  margin-bottom:2rem;
+}
+
+.diet-form h2{
+  text-align:center;
+  color:var(--accent);
+  margin-bottom:1.5rem;
+  font-size:1.8rem;
+}
+
+/* INPUT ROWS */
+.input-row{
+  display:flex;
+  gap:1rem;
+  margin-bottom:1rem;
+}
+
+.input-group{
+  flex:1;
+}
+
+label{
+  font-size:0.9rem;
+  color:var(--muted);
+  margin-bottom:6px;
+  display:block;
+}
+
+input, select{
+  width:100%;
+  padding:0.8rem;
+  border-radius:8px;
+  background:#fff;
+  border:1px solid rgba(255,255,255,0.1);
+  color:#000;
+  font-size:1rem;
+}
+
+/* BUTTON */
+button{
+  background:var(--accent);
+  color:#fff;
+  padding:0.9rem 1.2rem;
+  font-weight:700;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  width:100%;
+  margin-top:0.8rem;
+  transition:0.3s;
+}
+
+button:hover{
+  background:var(--accent-hover);
+  transform:scale(1.03);
+}
+
+/* RESULTS GRID */
+#dietResults{
+  width:100%;
+  max-width:1000px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;
+}
+
+.plan-card{
+  background:var(--card-bg);
+  border-radius:14px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.05);
+  transition:0.3s;
+}
+
+.plan-card:hover{
+  transform:translateY(-5px);
+}
+
+.plan-card img{
+  width:100%;
+  height:200px;
+  object-fit:contain;
+  padding-top:20px;
+}
+
+.plan-card h3{
+  text-align:center;
+  color:var(--accent);
+  font-size:1.3rem;
+  padding:0.8rem;
+}
+
+.plan-card p{
+  color:var(--muted);
+  padding:0 1rem 1rem;
+}
+
+details{
+  background:rgba(255,255,255,0.05);
+  padding:1rem;
+  color:var(--muted);
+}
+
+summary{
+  cursor:pointer;
+  color:var(--accent);
+  font-weight:600;
+}
+
+/* RESPONSIVE */
+@media (max-width:780px) {
+  .input-row{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Diet Plans</h1>
+  <a href="customer.html">← Back to Dashboard</a>
+</header>
+
+<!-- FORM -->
+<form id="dietForm" class="diet-form">
+  <h2>Custom Diet Plans</h2>
+
+  <div class="input-row">
+    <div class="input-group">
+      <label for="mealQuery">Meal / Goal</label>
+      <select id="mealQuery">
+        <option value="">Select meal/goal</option>
+        <option value="breakfast">Breakfast</option>
+        <option value="lunch">Lunch</option>
+        <option value="dinner">Dinner</option>
+        <option value="snack">Snack</option>
+        <option value="high-protein meal">High Protein</option>
+        <option value="low-carb meal">Low Carb</option>
+        <option value="weight loss meal">Weight Loss</option>
+        <option value="muscle gain meal">Muscle Gain</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="calories">Calories (range)</label>
+      <input id="calories" placeholder="e.g., 200-500">
+    </div>
+  </div>
+
+  <div class="input-row">
+    <div class="input-group">
+      <label for="dietPref">Diet Preference</label>
+      <select id="dietPref">
+        <option value="">Any</option>
+        <option value="balanced">Balanced</option>
+        <option value="high-protein">High-Protein</option>
+        <option value="low-fat">Low-Fat</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="healthPref">Health</label>
+      <select id="healthPref">
+        <option value="">Any</option>
+        <option value="vegetarian">Vegetarian</option>
+        <option value="vegan">Vegan</option>
+        <option value="peanut-free">Peanut-Free</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="input-row">
+    <div class="input-group">
+      <label for="cuisineType">Cuisine Type</label>
+      <select id="cuisineType">
+        <option value="">Any Cuisine</option>
+        <option value="american">American</option>
+        <option value="asian">Asian</option>
+        <option value="british">British</option>
+        <option value="caribbean">Caribbean</option>
+        <option value="chinese">Chinese</option>
+        <option value="french">French</option>
+        <option value="indian">Indian</option>
+        <option value="italian">Italian</option>
+        <option value="japanese">Japanese</option>
+        <option value="mediterranean">Mediterranean</option>
+        <option value="mexican">Mexican</option>
+        <option value="middle eastern">Middle Eastern</option>
+        <option value="thai">Thai</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="excluded">Exclude ingredients</label>
+      <input id="excluded" placeholder="e.g., dairy, nuts">
+    </div>
+  </div>
+
+  <button type="submit">Get Diet Plans</button>
+</form>
+
+<!-- RESULTS -->
+<div id="dietResults"></div>
+
+</body>
+</html>
