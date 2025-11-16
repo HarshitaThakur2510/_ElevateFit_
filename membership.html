@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Membership - ElevateFit</title>
+<style>
+:root {
+  --page-bg: #111827;
+  --card-bg: #1f2937;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --text: #fff;
+  --muted: #d1d5db;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--page-bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+header {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+header a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+header a:hover { color: var(--accent); }
+
+/* Active Plan Card */
+#status-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card-bg);
+  padding: 1.2rem 1.6rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.05);
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 2.5rem;
+  transition: all 0.3s ease;
+}
+#status-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+}
+
+#status {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.active { color: #4ade80; }
+.inactive { color: #f87171; }
+
+#cancelBtn {
+  background: var(--danger);
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+#cancelBtn:hover {
+  background: var(--danger-hover);
+  transform: scale(1.05);
+}
+
+/* Membership Cards */
+main {
+  width: 100%;
+  max-width: 800px;
+  display: grid;
+  gap: 1.8rem;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 1.6rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+}
+
+.card h2 {
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+  font-size: 1.25rem;
+}
+.card p {
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Membership Plans</h1>
+  <a href="customer.html">← Back</a>
+</header>
+
+<!-- Compact Active Plan Card -->
+<div id="status-card" style="display:none;">
+  <div id="status" class="inactive">No active membership.</div>
+  <button id="cancelBtn" style="display:none;">Cancel</button>
+</div>
+
+<main>
+  <div class="card">
+    <h2>Basic Plan</h2>
+    <p>Access to gym equipment and group classes.</p>
+    <p>Duration: 1 Month | Price: ₹999</p>
+    <button onclick="subscribe('Basic')">Subscribe</button>
+  </div>
+
+  <div class="card">
+    <h2>Standard Plan</h2>
+    <p>Includes Basic + Personal Trainer 2 sessions/week.</p>
+    <p>Duration: 3 Months | Price: ₹2699</p>
+    <button onclick="subscribe('Standard')">Subscribe</button>
+  </div>
+
+  <div class="card">
+    <h2>Premium Plan</h2>
+    <p>All features + Unlimited PT + Nutrition guidance.</p>
+    <p>Duration: 6 Months | Price: ₹4999</p>
+    <button onclick="subscribe('Premium')">Subscribe</button>
+  </div>
+</main>
+
+<script>
+const API = "http://localhost:3000";
+const session = JSON.parse(localStorage.getItem("session") || "null");
+const statusCard = document.getElementById("status-card");
+const statusDiv = document.getElementById("status");
+const cancelBtn = document.getElementById("cancelBtn");
+
+if (!session || session.role !== "user") {
+  window.location.href = "welcome.html";
+}
+
+async function loadMembership() {
+  try {
+    const res = await fetch(`${API}/memberships?userId=${session.id}`);
+    const data = await res.json();
+    statusCard.style.display = "flex";
+    if (data.length) {
+      const m = data[0];
+      statusDiv.textContent = `Active Plan: ${m.planName}`;
+      statusDiv.className = "active";
+      cancelBtn.style.display = "inline-block";
+    } else {
+      statusDiv.textContent = "No active membership.";
+      statusDiv.className = "inactive";
+      cancelBtn.style.display = "none";
+    }
+  } catch (e) {
+    console.error(e);
+    statusDiv.textContent = "Error loading membership.";
+  }
+}
+
+async function subscribe(plan) {
+  try {
+    const res = await fetch(`${API}/memberships?userId=${session.id}`);
+    const existing = await res.json();
+
+    const newPlan = {
+      userId: session.id,
+      name: session.name,
+      email: session.email,
+      planName: plan,
+      subscribedAt: new Date().toISOString()
+    };
+
+    if (existing.length) {
+      await fetch(`${API}/memberships/${existing[0].id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newPlan)
+      });
+    } else {
+      await fetch(`${API}/memberships`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newPlan)
+      });
+    }
+
+    alert(`You have subscribed to the ${plan} Plan!`);
+    loadMembership();
+  } catch (e) {
+    console.error(e);
+    alert("Subscription failed. Try again.");
+  }
+}
+
+cancelBtn.addEventListener("click", async () => {
+  try {
+    const res = await fetch(`${API}/memberships?userId=${session.id}`);
+    const data = await res.json();
+    if (data.length) {
+      await fetch(`${API}/memberships/${data[0].id}`, { method: "DELETE" });
+      alert("Membership cancelled.");
+      loadMembership();
+    }
+  } catch (e) {
+    console.error(e);
+    alert("Failed to cancel membership.");
+  }
+});
+
+loadMembership();
+</script>
+</body>
+</html>

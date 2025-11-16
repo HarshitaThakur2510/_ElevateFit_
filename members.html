@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Members - ElevateFit Admin</title>
+
+<style>
+:root {
+  --page-bg: #111827;
+  --card-bg: #1f2937;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --text: #ffffff;
+  --muted: #d1d5db;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--page-bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+header {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+header a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+header a:hover { color: var(--accent); }
+
+main {
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Member Card */
+.member-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.member-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.55);
+}
+
+.member-card h2 {
+  color: var(--accent);
+  font-size: 1.25rem;
+  margin-bottom: 0.4rem;
+}
+.member-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+.remove-btn {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  margin-top: 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+.remove-btn:hover {
+  background: var(--danger-hover);
+  transform: scale(1.05);
+}
+
+.loading {
+  color: var(--muted);
+  text-align: center;
+  margin-top: 2rem;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>All Members</h1>
+  <a href="admin.html">← Back to Dashboard</a>
+</header>
+
+<main id="membersContainer">
+  <div class="loading">Loading members...</div>
+</main>
+
+<script>
+const API = "http://localhost:3000";
+const session = JSON.parse(localStorage.getItem("session") || "null");
+
+// redirect if not admin
+if (!session || session.role !== "admin") {
+  window.location.href = "welcome.html";
+}
+
+const container = document.getElementById("membersContainer");
+
+// fetch and display all members
+async function loadMembers() {
+  try {
+    const users = await (await fetch(`${API}/users`)).json();
+    const profiles = await (await fetch(`${API}/profiles`)).json();
+    const memberships = await (await fetch(`${API}/memberships`)).json();
+
+    container.innerHTML = "";
+
+    if (!users.length) {
+      container.innerHTML = "<p class='loading'>No members found.</p>";
+      return;
+    }
+
+    users.forEach(u => {
+      const profile = profiles.find(p => p.userId === u.id);
+      const membership = memberships.find(m => m.userId === u.id);
+      
+      const card = document.createElement("div");
+      card.className = "member-card";
+      card.innerHTML = `
+        <h2>${u.name}</h2>
+        <p><strong>Email:</strong> ${u.email}</p>
+        <p><strong>Age:</strong> ${profile?.age || "--"}</p>
+        <p><strong>BMI:</strong> ${profile?.bmi || "--"}</p>
+        <p><strong>Membership:</strong> ${membership?.planName || "No Plan"}</p>
+        <button class="remove-btn" onclick="removeMember('${u.id}', '${u.name}')">Remove</button>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "<p class='loading'>Error loading members.</p>";
+  }
+}
+
+async function removeMember(userId, name) {
+  if (!confirm(`Remove ${name} and all related data?`)) return;
+  
+  try {
+    // delete from users
+    const userRes = await fetch(`${API}/users/${userId}`);
+    if (userRes.ok || userRes.status === 404) await fetch(`${API}/users/${userId}`, { method: "DELETE" });
+
+    // delete related profile
+    const profileRes = await fetch(`${API}/profiles?userId=${userId}`);
+    const profiles = await profileRes.json();
+    for (const p of profiles) {
+      await fetch(`${API}/profiles/${p.id}`, { method: "DELETE" });
+    }
+
+    // delete related memberships
+    const memRes = await fetch(`${API}/memberships?userId=${userId}`);
+    const memberships = await memRes.json();
+    for (const m of memberships) {
+      await fetch(`${API}/memberships/${m.id}`, { method: "DELETE" });
+    }
+
+    alert(`Member ${name} removed successfully.`);
+    loadMembers();
+  } catch (err) {
+    console.error(err);
+    alert("Error removing member.");
+  }
+}
+
+loadMembers();
+</script>
+</body>
+</html>

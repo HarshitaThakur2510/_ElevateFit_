@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ElevateFit — Payment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ✅ Sandbox PayPal SDK (currency in USD) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AXzGczaBiJ2DDhh-2NVnTsYJkunLi9M7e990L9qenVzul26mZAwWR71QF7U1UY4s21C8M7shV5fV6cyY&currency=USD"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <style>
+    body { font-family: Inter, sans-serif; background: #0b1220; color: #edf2f7; }
+    .btn-primary { background-color: #f97316; color: white; padding: .6rem 1rem; border-radius: .5rem; font-weight: 600; }
+    .card { background: #0f1724; border: 1px solid #1f2937; border-radius: .75rem; }
+    .small { font-size: .85rem; color: #9ca3af; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+  <div class="w-full max-w-3xl card overflow-hidden">
+    <div class="p-6 border-b border-gray-700 flex justify-between items-center">
+      <h2 class="text-2xl font-bold">Checkout — ElevateFit</h2>
+      <a href="shopping.html" class="text-sm text-gray-300 hover:text-white"><i class="fas fa-arrow-left mr-2"></i> Continue shopping</a>
+    </div>
+
+    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Order summary -->
+      <div>
+        <h3 class="font-semibold text-lg mb-3">Order Summary</h3>
+        <div id="order-items" class="space-y-3 max-h-64 overflow-y-auto pr-2"></div>
+        <div class="mt-4 flex justify-between items-center text-gray-300">
+          <div>Subtotal</div>
+          <div id="order-subtotal" class="text-xl font-bold text-orange-500">₹0</div>
+        </div>
+        <div class="mt-2 text-sm text-gray-500">Taxes & shipping are simulated for demo.</div>
+      </div>
+
+      <!-- Payment -->
+      <div>
+        <h3 class="font-semibold text-lg mb-3">Payment</h3>
+        <div class="bg-gray-800 p-4 rounded-lg mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-3">
+              <i class="fab fa-paypal fa-2x text-blue-400"></i>
+              <div>
+                <div class="font-semibold">PayPal (Sandbox)</div>
+                <div class="text-sm text-gray-400">Use a sandbox buyer account to pay</div>
+              </div>
+            </div>
+            <div id="paypal-total" class="text-xl font-bold text-orange-500">₹0</div>
+          </div>
+          <div class="small mb-3">Charged via PayPal (approx): <span id="paypal-usd">USD 0.00</span></div>
+          <div id="paypal-button-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-6 border-t border-gray-700 text-center text-sm text-gray-500">
+      Demo checkout. No real money is transferred.
+    </div>
+  </div>
+
+  <script>
+    const CART_KEY = 'elevatefit_cart_v1';
+    const LAST_ORDER_KEY = 'elevatefit_last_order';
+
+    // Load cart from localStorage
+    function loadCart(){
+      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); }
+      catch(e){ console.error('cart parse error', e); return []; }
+    }
+    function saveLastOrder(order){ localStorage.setItem(LAST_ORDER_KEY, JSON.stringify(order)); }
+    function clearCart(){ localStorage.removeItem(CART_KEY); }
+
+    function formatNumber(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+
+    // Render cart items and return total INR
+    function renderOrder(){
+      const cart = loadCart();
+      const container = document.getElementById('order-items');
+      container.innerHTML = '';
+      if(!cart.length){
+        container.innerHTML = '<div class="text-gray-500">No items in cart. <a href="index.html" class="text-orange-400">Go shopping</a></div>';
+      } else {
+        cart.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'flex justify-between items-center';
+          div.innerHTML = `
+            <div>
+              <div class="font-medium">${item.name}</div>
+              <div class="text-sm text-gray-400">Qty: ${item.qty}</div>
+            </div>
+            <div class="font-semibold">₹${formatNumber(item.price * item.qty)}</div>`;
+          container.appendChild(div);
+        });
+      }
+      const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+      document.getElementById('order-subtotal').textContent = `₹${formatNumber(subtotal)}`;
+      document.getElementById('paypal-total').textContent = `₹${formatNumber(subtotal)}`;
+      document.getElementById('paypal-usd').textContent = `USD ${toUSD(subtotal)}`;
+      return subtotal;
+    }
+
+    // Convert INR → USD (simple fixed rate for demo)
+    function toUSD(inr){
+      const rate = 0.012; // 1 INR ≈ 0.012 USD
+      return (inr * rate).toFixed(2);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderOrder();
+
+      // ✅ PayPal Buttons
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+
+        createOrder: (data, actions) => {
+          const totalINR = renderOrder();
+          if (totalINR <= 0) { alert('Cart is empty'); return; }
+          const totalUSD = toUSD(totalINR);
+          console.log('Creating PayPal order', { totalINR, totalUSD });
+          return actions.order.create({
+            purchase_units: [{
+              amount: { currency_code: 'USD', value: totalUSD },
+              description: 'ElevateFit Order'
+            }]
+          });
+        },
+
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(details => {
+            console.log('Payment success', details);
+            const order = {
+              id: 'ORDER-' + Date.now(),
+              payer: details.payer,
+              totalUSD: details.purchase_units[0].amount.value,
+              timestamp: new Date().toISOString()
+            };
+            saveLastOrder(order);
+            clearCart();
+            alert(`Payment Successful — Thank you, ${details.payer.name.given_name}!`);
+            window.location.href = 'thankyou.html';
+          });
+        },
+
+        onError: (err) => {
+          console.error('PayPal Error:', err);
+          alert('Payment failed — check browser console for details.');
+        }
+      }).render('#paypal-button-container');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Welcome - ElevateFit</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" href="images/icon.png" type="image/png"/>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-white font-sans">
+  <!-- Navbar -->
+  <header class="fixed w-full top-0 left-0 z-50 bg-gray-900 bg-opacity-90 backdrop-blur-sm border-b border-orange-500">
+    <nav class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+      <a href="#" class="flex items-center text-2xl font-bold tracking-wide">
+        <i class="fas fa-dumbbell text-orange-500 mr-2"></i> ElevateFit
+      </a>
+      
+      <ul class="flex items-center space-x-8">
+        <li>
+          <a href="#about"
+            class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full font-semibold transition transform hover:scale-105 shadow-md shadow-orange-500/30">
+            About Us
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
+
+    <!-- CINEMATIC BLURRED BACKGROUND -->
+    <img src="images/hero_gym.jpg"
+         alt="Gym Background"
+         class="absolute inset-0 w-full h-full object-cover brightness-75 blur-[3px] md:blur-[4px]" />
+
+    <!-- Soft overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/60 to-gray-950/90"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 px-6 max-w-3xl">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-4 drop-shadow-xl">
+        Unleash Your <span class="text-orange-500">Inner Strength</span>
+      </h1>
+
+      <p class="text-gray-300 text-lg md:text-xl mb-6 drop-shadow">
+        Build confidence, power, and endurance through personalized fitness plans — crafted for you.
+      </p>
+
+      <div class="mt-6">
+        <a href="login.html"
+          class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-full text-lg transition transform hover:scale-105 shadow-lg shadow-orange-500/30">
+          Get Started
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT US -->
+  <section id="about" class="py-20 bg-gray-900 border-t border-orange-500 border-opacity-20">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+      <div class="space-y-6">
+        <h2 class="text-4xl font-bold text-orange-400">About ElevateFit</h2>
+
+        <p class="text-gray-300 leading-relaxed text-lg">
+          We’re not just another fitness platform — we’re your ultimate transformation partner.  
+          With over <span class="text-orange-400 font-semibold">10 years of expertise</span> in training and nutrition,
+          our mission is simple: help you unlock your true potential.
+        </p>
+
+        <p class="text-gray-400 italic">
+          “Fitness is not about being better than someone else; it’s about being better than you used to be.”
+        </p>
+      </div>
+
+      <div class="flex justify-center">
+        <img src="images/personal_trainer.avif"
+             alt="Trainer"
+             class="rounded-2xl shadow-lg shadow-orange-500/30 border border-orange-500/20 w-[90%] md:w-[80%] object-cover"/>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-950 py-6 border-t border-orange-500 border-opacity-30 text-center text-gray-400">
+    <p>&copy; 2025 ElevateFit. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
